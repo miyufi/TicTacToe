@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>❌⭕</title>
+    <link type="text/css"
+        href="{{ url_for('static', filename='vendor/@fortawesome/fontawesome-free/css/all.min.css') }}"
+        rel="stylesheet">
+    <link type="text/css" href="{{ url_for('static', filename='css/neumorphism.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='assets/img/mona-loading-dark.gif') }}" type="image/gif" />
+</head>
+
+<body>
+    <main style="height: 100vh;" class="d-flex justify-content-center align-content-center flex-wrap">
+        <div>
+            <h1 style="text-align: center"><img
+                    src="{{ url_for('static', filename='assets/img/mona-loading-dark.gif') }}" type="button"
+                    data-toggle="modal" data-target="#description-modal" height=80px> TIC TAC TOE
+                <img src="{{ url_for('static', filename='assets/img/mona-loading-dark.gif') }}" height=80px
+                    type="button" data-toggle="modal" data-target="#description-modal">
+
+            </h1>
+            <div class="card bg-primary shadow-inset border-light p-3">
+                <table>
+                    {% for j in range(0, 3) %}
+                    <tr>
+                        {% for i in range(0, 3) %}
+                        <td>
+                            <div>
+                                <button
+                                    class="submit btn btn-primary animate-down-2 text-center m-2 justify-content-center align-content-center flex-wrap {{"
+                                    active" if ttt.spot_string(i, j)!="_" or ttt.is_over() }}"
+                                    style="height: 150px; width: 150px; {{" pointer-events: none;" if ttt.spot_string(i,
+                                    j)!="_" or ttt.is_over() }}" id="boardValue{{j*3+i+1}}" type="submit" name="choice"
+                                    value="{{j*3+i+1}}">
+                                    {% if ttt.spot_string(i, j) == "X" %}
+                                    <h1 class="fas fa-times text-danger val" style="font-size: 80px;"></h1>
+                                    {% elif ttt.spot_string(i, j) == "O" %}
+                                    <h1 class="far fa-circle text-secondary val" style="font-size: 80px;"></h1>
+                                    {% endif %}
+
+                                </button>
+                            </div>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <br>
+            <div class="text-center">
+                <button class="btn btn-primary text-secondary mr-1 reset" type="submit" name="reset" value="reset"><span
+                        class="fa-solid fa-rotate mr-1"> </span>New Game</button>
+                <button type="button" class="btn btn-primary text-success" data-toggle="modal"
+                    data-target="#difficulty-modal"><span class="fas fa-cog mr-1"> </span>Options</button>
+                <div class="modal fade" id="difficulty-modal" tabindex="-1" role="dialog"
+                    aria-labelledby="difficulty-modal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="h6 modal-title mb-0 mr-1" id="modal-title-default"><span
+                                        class="fas fa-cog mr-1"></span>Options</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <form name="options">
+                                <div class="modal-body">
+                                    <h5>A.I. Difficulty</h5>
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary btn-pill text-dark mr-2 difficulty {{" active" if
+                                            difficulty=="easy" }}" type="button" value="easy">Easy</button>
+                                        <button class="btn btn-primary btn-pill text-dark mr-2 difficulty {{" active" if
+                                            difficulty=="medium" }}" type="button" value="medium">Medium</button>
+                                        <button class="btn btn-primary btn-pill text-dark difficulty {{" active" if
+                                            difficulty=="hard" }}" type="button" value="hard">Hard</button>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary text-success ml-auto check"
+                                        data-dismiss="modal"><span class="fas fa-check mr-1"></span>Apply</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-2">Click the gif for the description!</p>
+            </div>
+
+
+        </div>
+        <div class="alertMessage" style="position: absolute; top: 44.5%; width: 20%;">
+            {% if ttt.is_over() %}
+            <div class="alert alert-secondary alert-dismissible shadow-soft fade show " role="alert">
+                <h4 class="text-secondary text-center"><span class="alert-inner--icon"><span
+                            class="fas fa-exclamation-circle"></span></span>
+                    <span>{{ ttt.winner() }}</span>
+                </h4>
+                <button type="button" class="close text-dark" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+        </div>
+
+    </main>
+
+    <div class="modal fade" id="description-modal" tabindex="-1" role="dialog" aria-labelledby="description-modal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h5 modal-title mb-0" id="modal-title-default">S-CSIS426LA Summative Assessment BCS43</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Tic Tac Toe with A.I. using Negamax Algorithm from the easyAI library.</h5>
+                    <br>
+                    <table class="table table-hover shadow-inset rounded">
+                        <tr>
+                            <th>Members:</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Delgado, Rizza Fiona</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Erfe, Martin Kianne</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Mendiola, Maria Dennise</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Reyes, Jerizsa Hannah</th>
+                        </tr>
+                    </table>
+                    <button type="button" class="btn btn-primary text-danger ml-auto"
+                        data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/tictactoe.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='vendor/popper.js/dist/umd/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/headroom.js/dist/headroom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/nouislider/distribute/nouislider.min.js') }}"></script>
+    <script
+        src="{{ url_for('static', filename='vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/waypoints/lib/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/jarallax/dist/jarallax.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery.counterup/jquery.counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery-countdown/dist/jquery.countdown.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/prismjs/prism.js') }}"></script>
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/neumorphism.js') }}"></script>
+</body>
+
+</html>
